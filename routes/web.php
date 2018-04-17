@@ -12,5 +12,14 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('main');
+});
+
+// humanoid prefix
+Route::prefix('humanoid')->group(function () {
+    Route::post('create', 'HumanoidController@create');
+});
+
+Route::get('/', function () {
+    return view('main');
 });
