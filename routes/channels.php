@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Broadcasting\Channel;
+
 /*
 |--------------------------------------------------------------------------
 | Broadcast Channels
@@ -14,3 +16,6 @@
 Broadcast::channel('App.User.{id}', function ($user, $id) {
     return (int) $user->id === (int) $id;
 });
+
+// humanoid CRUD channel
+Broadcast::channel(HUMANOID_BROADCAST_CH, function() {return true;});

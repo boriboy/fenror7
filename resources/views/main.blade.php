@@ -4,6 +4,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <title>Laravel</title>
 
@@ -71,10 +72,7 @@
         <script>
             // creates humanoid via ajax
             function createHumanoid() {
-                console.log('in func')
-                $.post('/humanoid/create', $('#humanoid-create-form').serializeArray(), res => {
-                    console.log('humanoid create response', res)
-                })
+                $.post('/humanoid/create', $('#humanoid-create-form').serializeArray())
             }
 
         </script>

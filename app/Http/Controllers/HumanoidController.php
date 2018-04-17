@@ -8,6 +8,9 @@ use Faker\Factory as Faker;
 // models
 use App\Humanoid;
 
+// events
+use App\Events\HumanoidCreatedEvent;
+
 class HumanoidController extends Controller
 {
     /**
@@ -20,11 +23,15 @@ class HumanoidController extends Controller
         // instantiate new humanoid model and create it in database
         $faker = Faker::create();
         $humanoid = new Humanoid();
+
+        // handle input (obviously in a normal app there would be input validation)
         $humanoid->name = $request->input('name', $faker->firstName);
         $humanoid->species = $request->input('species', OLYMPIAN);
 
-        $humanoid->save();
-
-        // TODO: MAKE THE FORM WORK VIA AJAX
+        $saved = $humanoid->save();
+        if ($saved) {
+            // dispatch event
+            event(new HumanoidCreatedEvent($humanoid));
+        }
     }
 }

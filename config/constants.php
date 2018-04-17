@@ -10,3 +10,6 @@ const SKRULL = 'skrull';
 
 // species array
 const SPECIES_ARR = [KREE, KRYPTONIAN, MERMANUS, OLYMPIAN, HUMAN, SKRULL];
+
+// broadcasting channels
+const HUMANOID_BROADCAST_CH = 'humanoid';
