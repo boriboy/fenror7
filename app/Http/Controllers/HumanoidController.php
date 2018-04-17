@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Faker\Factory as Faker;
 
 // models
 use App\Humanoid;
@@ -21,11 +20,10 @@ class HumanoidController extends Controller
      */
     public function create(Request $request) {
         // instantiate new humanoid model and create it in database
-        $faker = Faker::create();
         $humanoid = new Humanoid();
 
         // handle input (obviously in a normal app there would be input validation)
-        $humanoid->name = $request->input('name', $faker->firstName);
+        $humanoid->name = $request->input('name', 'fake name');
         $humanoid->species = $request->input('species', OLYMPIAN);
 
         $saved = $humanoid->save();
