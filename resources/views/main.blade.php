@@ -64,10 +64,8 @@
                 margin-bottom: 30px;
             }
         </style>
-        <script
-            src="https://code.jquery.com/jquery-3.3.1.min.js"
-            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-            crossorigin="anonymous"></script>
+
+        <script src="/js/bootstrap.js"></script>
 
         <script>
             // creates humanoid via ajax
@@ -75,7 +73,21 @@
                 $.post('/humanoid/create', $('#humanoid-create-form').serializeArray())
             }
 
+            function updateLatestHumanoid(name, date) {
+                $('#latest-humanoid').html(`${name} at ${date}`)
+            }
         </script>
+
+        <!-- attach pusher listeners -->
+        <script>
+            Echo.channel('humanoid')
+                .listen('HumanoidCreatedEvent', (e) => {
+                    console.log(e)
+                    updateLatestHumanoid(e.humanoid.name, e.humanoid.created_at)
+                });
+        </script>
+
+
 
     </head>
     <body>
@@ -101,6 +113,16 @@
                         <button type="button" onclick="createHumanoid()">Create Humanoid</button>
                     </form>
                 </div>
+
+                <br>
+                <br>
+                <br>
+
+                <div>
+                    <h2>Latest created humanoid:</h2>
+                    <div id="latest-humanoid"></div>
+                </div>
+
             </div>
         </div>
 
