@@ -36,17 +36,14 @@ class HumanoidCreatedEvent implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        if (env('APP_ENV', 'local') === 'local') {
-            // return broadcast channel 
-            return new Channel(HUMANOID_BROADCAST_CH);
-        } else {
+        if (env('APP_ENV', 'local') === 'production') {
             // if environment production, use the pusher sdk manually
             // this is because laravel's integrated pusher broadcast via events depends on curl.cainfo in php.ini.
             // we don't have control over that setting on heroku, but on my local environment in works fine
-            $pusher = new Pusher\Pusher(env('PUSHER_APP_KEY'), env('PUSHER_APP_SECRET'), env('PUSHER_APP_ID'), ['cluster' => env('PUSHER_APP_CLUSTER'), encrypted => true]);
-            $pusher->trigger(HUMANOID_BROADCAST_CH, 'HumanoidCreatedEvent', $this->humanoid);
+            $pusher = new \Pusher\Pusher(env('PUSHER_APP_KEY'), env('PUSHER_APP_SECRET'), env('PUSHER_APP_ID'), ['cluster' => env('PUSHER_APP_CLUSTER'), 'encrypted' => true]);
+            $pusher->trigger(HUMANOID_BROADCAST_CH, self::class, ['humanoid' => $this->humanoid]);
         }
 
-        return new Channel();
+        return new Channel(HUMANOID_BROADCAST_CH);
     }
 }
