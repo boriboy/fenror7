@@ -1,5 +1,7 @@
 <?php
 
+use App\Humanoid;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -11,15 +13,15 @@
 |
 */
 
-Route::get('/', function () {
-    return view('main');
+Route::get('/', function() {
+    return view('main', [
+        'paginated' => Humanoid::paginate(5)
+    ]);
 });
 
 // humanoid prefix
 Route::prefix('humanoid')->group(function () {
     Route::post('create', 'HumanoidController@create');
+    Route::get('paginate', 'HumanoidController@paginate');
 });
 
-Route::get('/', function () {
-    return view('main');
-});

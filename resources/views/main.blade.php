@@ -16,7 +16,7 @@
             html, body {
                 background-color: #fff;
                 color: #636b6f;
-                font-family: 'Raleway', sans-serif;
+                /* font-family: 'Raleway', sans-serif; */
                 font-weight: 100;
                 height: 100vh;
                 margin: 0;
@@ -63,6 +63,23 @@
             .m-b-md {
                 margin-bottom: 30px;
             }
+
+            ul {
+                list-style-type: none;
+                margin: 5;
+                padding: 0;
+                overflow: hidden;
+            }
+
+            ul > li {
+                float: left;
+            }
+
+            .links {
+                margin: auto;
+                width: 50%;
+            }
+
         </style>
 
         <script src="/js/bootstrap.js"></script>
@@ -82,7 +99,7 @@
         <script>
             Echo.channel('humanoid')
                 .listen('HumanoidCreatedEvent', (e) => {
-                    console.log(e)
+                    console.log('received pusher event', e)
                     updateLatestHumanoid(e.humanoid.name, e.humanoid.created_at)
                 });
         </script>
@@ -119,8 +136,31 @@
                 <br>
 
                 <div>
-                    <h2>Latest created humanoid:</h2>
+                    <h2>Latest created humanoid (pusher data):</h2>
                     <div id="latest-humanoid"></div>
+                </div>
+
+                <br>
+                <br>
+                <br>
+
+                <div id="humanoid-list" >
+                    <h2>humanoids table</h2>
+                    <div style="margin: auto;width: 50%;border: 3px solid green;padding: 10px;">
+                        <table style="margin: auto">
+                            @foreach($paginated as $user)
+                                <tr>
+                                    <th>{{$paginated->firstItem() + $loop->index}}</th>
+                                    <th>{{$user->name}}</th>
+                                    <th>{{$user->species}}</th>
+                                    <th>{{$user->created_at}}</th>
+                                </tr>
+                            @endforeach
+                        </table>
+                        <div class="links">
+                            {{$paginated->links()}}
+                        </div>
+                    </div>
                 </div>
 
             </div>

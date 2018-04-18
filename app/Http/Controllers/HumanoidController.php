@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+// paginator
+use Illuminate\Pagination\Paginator;
+
 // models
 use App\Humanoid;
 
@@ -31,5 +34,13 @@ class HumanoidController extends Controller
             // dispatch event
             event(new HumanoidCreatedEvent($humanoid));
         }
+    }
+
+    /**
+     * Api route for ajax requests - load data of page requested
+     * @param Request $request
+     */
+    public function paginate(Request $request) {
+        return Humanoid::paginate(5)->getCollection();
     }
 }
