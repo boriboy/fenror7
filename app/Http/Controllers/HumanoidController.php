@@ -35,12 +35,4 @@ class HumanoidController extends Controller
             event(new HumanoidCreatedEvent($humanoid));
         }
     }
-
-    /**
-     * Api route for ajax requests - load data of page requested
-     * @param Request $request
-     */
-    public function paginate(Request $request) {
-        return Humanoid::paginate(5)->getCollection();
-    }
 }

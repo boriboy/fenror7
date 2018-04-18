@@ -22,6 +22,5 @@ Route::get('/', function() {
 // humanoid prefix
 Route::prefix('humanoid')->group(function () {
     Route::post('create', 'HumanoidController@create');
-    Route::get('paginate', 'HumanoidController@paginate');
 });
 
